@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from .models import Product
+from .models import Product, Contact
 from math import ceil
 
 # Create your views here.
@@ -23,27 +23,33 @@ def index(request):
     return render(request, 'shop/index.html', params)
 
 def about(request):
-    # return HttpResponse("we are at about page")
     return render(request, 'shop/about.html')
 
 def contact(request):
-    return HttpResponse("we are at contact page")
-    # return render(request, 'shop/index.html')
+    if request.method == "POST":
+        name = request.POST.get('name', '')
+        email = request.POST.get('email', '')
+        phone = request.POST.get('phone', '')
+        desc = request.POST.get('desc', '')
+        contact = Contact(name=name, email=email, phone=phone, desc=desc)
+        contact.save()
+    return render(request, 'shop/contact.html')
 
 def tracker(request):
-    return HttpResponse("we are tracker page")
-    # return render(request, 'shop/index.html')
+    return render(request, 'shop/tracker.html')
 
 def search(request):
-    return HttpResponse("we are at search page")
-    # return render(request, 'shop/index.html')
+    return render(request, 'shop/search.html')
 
-def productview(request):
-    return HttpResponse("we are at product view")
-    # return render(request, 'shop/index.html')
+def productview(request, myid):
+    # fetch product using id
+
+    product = Product.objects.filter(id=myid)
+    print(product)
+    params = {'product': product[0]}
+    return render(request, 'shop/prodview.html', params)
 
 def checkout(request):
-    return HttpResponse("we are at checkout page")
-    # return render(request, 'shop/index.html')
+    return render(request, 'shop/checkout.html')
 
 
