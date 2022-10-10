@@ -23,27 +23,26 @@ def index(request):
     return render(request, 'shop/index.html', params)
 
 def about(request):
-    # return HttpResponse("we are at about page")
     return render(request, 'shop/about.html')
 
 def contact(request):
-    return HttpResponse("we are at contact page")
-    # return render(request, 'shop/index.html')
+    return render(request, 'shop/contact.html')
 
 def tracker(request):
-    return HttpResponse("we are tracker page")
-    # return render(request, 'shop/index.html')
+    return render(request, 'shop/tracker.html')
 
 def search(request):
-    return HttpResponse("we are at search page")
-    # return render(request, 'shop/index.html')
+    return render(request, 'shop/search.html')
 
-def productview(request):
-    return HttpResponse("we are at product view")
-    # return render(request, 'shop/index.html')
+def productview(request, myid):
+    # fetch product using id
+
+    product = Product.objects.filter(id=myid)
+    print(product)
+    params = {'product': product}
+    return render(request, 'shop/prodview.html', params)
 
 def checkout(request):
-    return HttpResponse("we are at checkout page")
-    # return render(request, 'shop/index.html')
+    return render(request, 'shop/checkout.html')
 
 
